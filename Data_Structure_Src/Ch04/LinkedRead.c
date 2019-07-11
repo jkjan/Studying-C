@@ -11,7 +11,11 @@ int main(void)
 {
 	Node * head = NULL;    // NULL 포인터 초기화
 	Node * tail = NULL;
+<<<<<<< HEAD
 	Node * cur = NULL;   //순차접근을 위함
+=======
+	Node * cur = NULL;
+>>>>>>> 0ba30ea316b5ebad600bc13dc6ed51204e5f22f3
 
 	Node * newNode = NULL;
 	int readData;
@@ -29,9 +33,15 @@ int main(void)
 		newNode->data = readData;
 		newNode->next = NULL;
 
+<<<<<<< HEAD
 		if(head == NULL)     //첫번째 노드 추가
 			head = newNode;
 		else                 //두번째부터의 노드 추가
+=======
+		if(head == NULL)
+			head = newNode;
+		else
+>>>>>>> 0ba30ea316b5ebad600bc13dc6ed51204e5f22f3
 			tail->next = newNode;
 
 		tail = newNode;
@@ -55,7 +65,10 @@ int main(void)
 			printf("%d  ", cur->data);
 		}
 	}
+<<<<<<< HEAD
 
+=======
+>>>>>>> 0ba30ea316b5ebad600bc13dc6ed51204e5f22f3
 	printf("\n\n");
 
 	/**** 메모리의 해제과정 ****/

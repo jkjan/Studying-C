@@ -4,7 +4,12 @@
 int num;
 int * visited;
 graph*glist;
-jo* que;
+
+void dfsg(int n) {
+	visited[n] = 1;
+	printf("from %d ", n);
+	(glist + n)->adjs->dfs();
+}
 
 int main() {
 	FILE * fp = fopen("input.txt", "rt");
@@ -19,7 +24,7 @@ int main() {
 	int a, b;
 
 	fscanf(fp, "%d %d", &num, &vs);
-	glist = (graph*)malloc(sizeof(graph)*(num+1));
+	glist = (graph*)malloc(sizeof(graph)*(num));
 
 	for (i = 1; i <= num; i++) {
 		(glist + i)->ver = i;
@@ -33,52 +38,48 @@ int main() {
 		if ((glist + a)->adjs->search(b) == 0) {
 			(glist + a)->adjs->addtree(b);
 			(glist + a)->adjcnt++;
-		}
 
-		else
-			puts("duplicate edge");
-
-		if ((glist + b)->adjs->search(a) == 0) {
 			(glist + b)->adjs->addtree(a);
 			(glist + b)->adjcnt++;
 		}
-
 		else
 			puts("duplicate edge");
 	}
-
-	fclose(fp);
 
 	puts("==============================");
 	for (i = 1; i <= num; i++) {
 		printf("vertex %d: ", i);
 		(glist + i)->adjs->treeprint();
+		//dfsg(i);
 		printf("\n");
 	}
 	puts("==============================");
 	puts("dfs =================");
 
-	vinit();
+
+	visited = (int*)malloc(sizeof(int)*(num+1));
+	for (i = 0; i <= num; i++)
+		*visited = 0;
+
 	dfsg(1);
+
 
 	puts("==================");
 
+
 	puts("bfs =================");
 
-	vinit();
-	que = (jo*)malloc(sizeof(jo));
-	que->init();
-	bfsg();
 
-	printf("==================");
 
+	puts("==================");
+
+
+	
 	for (i = 1; i <= num; i++) {
 		(glist + i)->adjs->thanos();
 	}
 	
-	free(que);
 	free(glist);
-	free(visited);
 
 	return 0;
 }

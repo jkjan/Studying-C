@@ -17,6 +17,7 @@ public:
 	void thanos();
 	void dfs();
 	void bfs();
+
 };
 
 void dfsg(int n);
@@ -27,8 +28,9 @@ typedef struct _graph {
 	int adjcnt;
 }graph;
 
-void vinit();
-void dfsg(int n);
-void bfsg();
-
 #endif
+
+#pragma once
+
+
+#pragma once

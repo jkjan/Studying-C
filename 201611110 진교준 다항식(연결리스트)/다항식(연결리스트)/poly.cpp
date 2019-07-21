@@ -34,9 +34,8 @@ void load(FILE*fp) {
 		else {
 			if (AorB == 0)
 				A->insert(c, cnt);
-			else {
+			else
 				B->insert(c, cnt);
-			}
 		}
 		
 		if (start == 1) {
@@ -47,8 +46,8 @@ void load(FILE*fp) {
 			start--;
 	}
 
-	if (start != 0) { //수가 맞지 않음
-		printf("error : the polynomials in the text file are ambiguous.\n");
+	if (start != 0) {
+		printf("error : the polynomials you have entered are ambiguous.\n");
 		printf("        please check the numbers.\n");
 		exit(0);
 	}
@@ -63,8 +62,8 @@ void poly::zero() { //0짜리 생성
 	this->tail = zerohang;
 }
 
-int poly::isZero() { //0인지 확인
-	return ((this->leadExp() == 0) && (this->head->next->coef == 0) && (this->head->next->next == NULL)) ? 1 : 0;
+int poly::isZero() { //0인지 확인 (공간이 있나 없나?)
+	return ((this->leadExp() == 0) && (this->head->next->coef == 0) && (this->tail->next == NULL)) ? 1 : 0;
 }
 
 int poly::coef(int e) { //지수가 e인 항의 계수 리턴
@@ -85,6 +84,10 @@ int poly::leadExp() { //최고차항의 지수 리턴
 }
 
 void poly::append(int c, int e) { //cx^e를 마지막에 추가
+	if (this->tail->exp < e) {
+		return;
+	}
+	
 	if (this->tail->exp > e) {
 		hang* newhang = (hang*)malloc(sizeof(hang));
 		newhang->setHang(c, e, NULL);
@@ -92,15 +95,15 @@ void poly::append(int c, int e) { //cx^e를 마지막에 추가
 		this->tail->next = newhang;
 		this->tail = newhang;
 	}
-	else if (this->tail->exp == e) {
+	else {
 		this->tail->coef += c;
 		if (this->tail->coef == 0) {
 			this->tail->exp = 0;
-			if ((this->leadExp() == 0) && (this->head->next->coef == 0)) //마지막 항이 0이 되었는데 최고차항도 0이면
-				this->zero(); //0으로 초기화
+			if (this->leadExp() == 0)
+				this->zero();
 		}
 	}
-	//장점 : 맨 뒤에 들어가야 할 시 O(1)
+
 	//단점 : 연산의 결과가 0이 될 시 삭제가 안 되고 남아있음. 단, 출력이나 추후 연산에 영향 x
 }
 
@@ -115,7 +118,6 @@ void poly::insert(int c, int e) { //cx^e를 적절한 위치에 삽입
 	if (this->isZero()) {
 		this->head->next->coef = c;
 		this->head->next->exp = e;
-		this->tail = this->head->next;
 		return;
 	}
 
@@ -130,11 +132,11 @@ void poly::insert(int c, int e) { //cx^e를 적절한 위치에 삽입
 
 			if (cur->next->coef == 0) {
 				cur->next->exp = 0;
-				if ((this->leadExp() == 0) && (this->head->next->coef == 0) && (cur->next->next == NULL)) { //합이 0인데 최고차항도 0이면
-					this->zero(); 
+				if (this->leadExp() == 0) {
+					this->zero();
+					return;
 				}
 			}
-			return;
 		}
 
 		else if (cur->next->exp < e) {

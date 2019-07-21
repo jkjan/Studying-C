@@ -1,3 +1,4 @@
+#pragma once
 #ifndef dd
 #define dd
 
@@ -24,5 +25,3 @@ public:
 
 
 #endif
-
-#pragma once

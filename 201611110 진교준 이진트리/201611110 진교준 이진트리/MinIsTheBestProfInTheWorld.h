@@ -32,13 +32,15 @@ public:
 	node* lc;
 	node* rc;
 public :
+	node* init();
 	void treeprint();
 	node* addtree(node* p, sinfo*w);
-	getReturn* search(char * name);
-	int remove(char * name);
+	getReturn* search(node*p, char * name);
+	int remove(node * p, char * name);
 	int isleaf(node*p);
 	node * getLeftMax(node*p);
 	getReturn* setReturn(node* p, int l);
+
 	node* talloc();
 };
 

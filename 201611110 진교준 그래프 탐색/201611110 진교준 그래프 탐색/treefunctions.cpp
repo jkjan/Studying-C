@@ -1,14 +1,11 @@
 #include "treengraph.h"
-#include "queue.h"
 
 extern int* visited;
-extern jo* que;
-extern int vertex;
 
 void node::treeprint() {
 	if (this->adjnode != -1) {
 		this->lc->treeprint();
-		printf("%d,  ", this->adjnode);
+		printf("%2d, ", this->adjnode);
 		this->rc->treeprint();
 	}
 }
@@ -56,27 +53,14 @@ void node::thanos() {
 void node::dfs() {
 	if (this->adjnode != -1) {
 		this->lc->dfs();
-
+		printf("%2d, ", this->adjnode);
 		if (visited[this->adjnode] == 0) {
-			visited[this->adjnode] = 1;
-			printf("[%d, %d]\n",vertex, this->adjnode);
+			//visited[this->adjnode] = 1;
+			printf("to %d visited\n", this->adjnode);
 
 			dfsg(this->adjnode);
+
 		}
 		this->rc->dfs();
-	}
-}
-
-void node::bfs() {  //for나 while같은 반복문으로 인접노드를 순차적으로 참조할 수가 없어서..
-	if (this->adjnode != -1) {
-		this->lc->bfs();
-
-		if (visited[this->adjnode] == 0) {
-			visited[this->adjnode] = 1;
-			printf("[%d, %d]\n",vertex, this->adjnode);
-			que->enque(this->adjnode);
-		}
-
-		this->rc->bfs();
 	}
 }

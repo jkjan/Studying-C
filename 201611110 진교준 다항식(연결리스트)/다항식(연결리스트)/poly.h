@@ -12,6 +12,7 @@ public:
 
 class poly {
 private :
+	int degree; //최대차수
 	hang* head; //항들의 연결리스트
 	hang* tail;
 public :
